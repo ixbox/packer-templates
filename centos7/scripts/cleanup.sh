@@ -4,8 +4,9 @@ yum -y clean all
 rm -rf VBoxGuestAdditions_*.iso
 rm -rf /tmp/rubygems-*
 
-# SERVICES=(
-#     auditd
+SERVICES=(
+    auditd.service #     auditd
+    avahi-daemon.service 
 #     blk-availability
 #     # crond
 #     ip6tables
@@ -28,9 +29,9 @@ rm -rf /tmp/rubygems-*
 #     # vboxadd
 #     # vboxadd-service
 #     # vboxadd-x11
-# )
-# for SERVICE in ${SERVICES[@]}; do
-#     chkconfig --level 12345 $SERVICE off
-# done
+)
+for SERVICE in ${SERVICES[@]}; do
+    systemctl disable $SERVICE
+done
 
 sed -i "s/tty\[1-6\]/tty1/" /etc/sysconfig/init
